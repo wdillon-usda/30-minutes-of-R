@@ -61,7 +61,7 @@ databricks_renviron_connection <- DBI::dbConnect(
 ## This puts your credentials into the code, so be careful with this
 ## Don't put it on GitHub or other public repositories
 connection_string <- "Driver=Simba Spark ODBC Driver;
-  Host=adb-7907596532855623.3.databricks.azure.us;
+  Host=<Host Server Address>;
   Port=443;
   HTTPPath=<HTTP Path of compute resource>;
   http.header.Authorization=Bearer <Personal Access Token>;
