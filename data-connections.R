@@ -26,7 +26,7 @@ sql_server_domestic <- DBI::dbConnect(
 
 # Connecting to databricks ####
 
-## Connect to databricks if you have a DSN setup
+## Connect to databricks if you have a DSN setup using Simba Spark ODBC Driver
 databricks_dsn_connection <- DBI::dbConnect(
   drv = odbc::odbc(),
   dsn = "databricks"
@@ -36,7 +36,12 @@ DBI::dbListTables(databricks_conn)
 
 ## Connect to databricks using environment variables
 ## Keeps your credentials out of the code
-## You'll need to set the DATABRICKS_HOST, DATABRICKS_HTTP_PATH, and DATABRICKS_TOKEN
+## You'll need to set the DATABRICKS_HOST, DATABRICKS_HTTP_PATH, and 
+## DATABRICKS_TOKEN values in the .Renviron file
+
+usethis::edit_r_environ()
+
+
 databricks_renviron_connection <- DBI::dbConnect(
   odbc::odbc(),
   Driver="Simba Spark ODBC Driver",
