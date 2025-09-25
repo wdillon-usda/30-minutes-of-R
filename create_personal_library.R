@@ -30,4 +30,4 @@ create_personal_library <- function(library_folder_name) {
   message("Restart R to apply changes.")
 }
 # Example usage
-create_personal_library("my_R_library")
+# create_personal_library("myRlibrary")
