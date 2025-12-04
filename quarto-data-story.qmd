@@ -1,0 +1,87 @@
+---
+title: "Quarto to Tell Your Story with Data"
+format: html
+---
+
+[Quarto to Tell Your Story with Data](https://ivelasq-gasp2025-quarto.share.connect.posit.cloud/)
+
+```{r}
+#| include: FALSE
+# install.packages("pak")
+pak::pak(c("dplyr", "ggplot2", "here", "janitor", "knitr", "readr", "scales"))
+```
+
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+1 + 1
+```
+
+You can add options to executable code like this 
+
+```{r}
+#| echo: true
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
+
+## Diagrams
+
+```{mermaid}
+%%| fig-width: 6
+flowchart LR
+  A[1] --> B(2)
+  B --> C{3}
+  C --> D[4]
+  C --> E[5]
+```
+
+## Equations
+
+```{markdown}
+
+$$E = mc^{2}$$
+
+```
+
+## Divs and Spans
+
+### Divs
+
+::: {.border}
+This content can be styled with a border
+:::
+
+### Spans
+
+[This is *some text*]{.class key="val"}
+
+
+:::{.callout-tip}
+
+Note that there are five types of callouts, including: 
+`note`, `tip`, `warning`, `caution`, and `important`.
+
+:::
+
+
+::: {.panel-tabset group="language"}
+## R
+
+`library(dplyr)`
+
+## Python
+
+`import pandas as pd`
+:::
+
+
+This is text that is [red]{style="color:red;"}.
