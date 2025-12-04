@@ -1,0 +1,98 @@
+---
+title: "30 Minutes of R"
+format: html
+server: shiny
+---
+
+# R for Data Science
+
+[R for Data Science (2e)](https://r4ds.hadley.nz/)
+
+## Shiny Documents
+
+This Quarto document is made interactive using Shiny. Interactive documents allow readers to modify parameters and see the results immediately. Learn more about Shiny interactive documents at <https://quarto.org/docs/interactive/shiny/>.
+
+## Inputs and Outputs
+
+You can embed Shiny inputs and outputs in your document. Outputs are automatically updated whenever inputs change. This demonstrates how a standard R plot can be made interactive:
+
+```{r load-packages}
+# install.packages(c("tidyverse","palmerpenguins","ggthemes"))
+library(shiny)
+library(tidyverse)
+library(palmerpenguins)
+library(ggthemes)
+```
+
+
+```{r}
+penguins
+```
+
+```{r}
+glimpse(penguins)
+```
+
+
+## Basic Shiny
+
+```{r}
+sliderInput("bins", "Number of bins:", 
+            min = 1, max = 50, value = 30)
+plotOutput("distPlot")
+```
+
+```{r}
+#| context: server
+output$distPlot <- renderPlot({
+   x <- faithful[, 2]  # Old Faithful Geyser data
+   bins <- seq(min(x), max(x), length.out = input$bins + 1)
+   hist(x, breaks = bins, col = 'darkgray', border = 'white',
+        xlab = 'Waiting time to next eruption (in mins)',
+        main = 'Histogram of waiting times')
+})
+```
+
+
+## Palmer Penguins Shiny
+```{r shiny-penguins}
+
+ui <- fluidPage(
+  titlePanel("Interactive Penguin Plot"),
+  sidebarLayout(
+    sidebarPanel(
+      checkboxGroupInput(
+        "species",
+        "Choose species to display:",
+        choices = unique(penguins$species),
+        selected = unique(penguins$species)
+      )
+    ),
+    mainPanel(
+      plotOutput("penguinPlot")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  output$penguinPlot <- renderPlot({
+    filtered <- penguins[penguins$species %in% input$species, ]
+    ggplot(
+      data = filtered,
+      mapping = aes(x = flipper_length_mm, y = body_mass_g)
+    ) +
+      geom_point(aes(color = species, shape = species)) +
+      geom_smooth(method = "lm") +
+      labs(
+        title = "Body mass and flipper length",
+        subtitle = "Dimensions for Adelie, Chinstrap, and Gentoo Penguins",
+        x = "Flipper length (mm)", y = "Body mass (g)",
+        color = "Species", shape = "Species"
+      ) +
+      ggthemes::scale_color_colorblind()
+  })
+}
+
+shinyApp(ui, server)
+```
+
